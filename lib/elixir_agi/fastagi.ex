@@ -134,8 +134,13 @@ defmodule ElixirAgi.FastAgi do
           :ok
         end
         reader = fn() ->
-          {:ok, read_data} = :gen_tcp.recv socket, 0
-          read_data
+          with {:ok, read_data} <- :gen_tcp.recv(socket, 0) do
+            read_data
+          else
+            {:error, reason} ->
+              log :debug, "error reading from socketi : #{reason}"
+              "HANGUP"
+          end
         end
 
         writer = fn(write_data) ->
