@@ -138,8 +138,8 @@ defmodule ElixirAgi.FastAgi do
             read_data
           else
             {:error, reason} ->
-              log :debug, "error reading from socketi : #{reason}"
-              "HANGUP"
+              log :debug, "error reading from socket : #{reason}"
+              "HANGUP "
           end
         end
 
